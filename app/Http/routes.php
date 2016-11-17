@@ -15,4 +15,4 @@
 //    return view('welcome');
 //});
 
-Route::get('/test','Admin\LoginController@index');
+Route::get('admin/login','Admin\LoginController@login');

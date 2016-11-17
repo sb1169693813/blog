@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends CommonController
 {
-    public function  index(){
+    public function  login(){
        return view('admin.login');
 //        $pdo =  Db::connection()->Pdo();
 //        dd($pdo);
