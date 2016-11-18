@@ -11,8 +11,14 @@
 |
 */
 
-//Route::get('/', function () {
+Route::get('/test', function () {
 //    return view('welcome');
-//});
+    echo 123;
+});
 
-Route::get('admin/login','Admin\LoginController@login');
+Route::group(['middleware'=>['web']],function(){
+    //登录路由
+    Route::get('admin/login','Admin\LoginController@login');
+    //验证码路由
+    Route::get('admin/code','Admin\LoginController@code');
+});
