@@ -158,8 +158,8 @@ class Translator extends NamespacedItemResolver implements TranslatorInterface
 
         foreach ($replace as $key => $value) {
             $line = str_replace(
-                [':'.$key, ':'.Str::upper($key), ':'.Str::ucfirst($key)],
-                [$value, Str::upper($value), Str::ucfirst($value)],
+                [':'.Str::upper($key), ':'.Str::ucfirst($key), ':'.$key],
+                [Str::upper($value), Str::ucfirst($value), $value],
                 $line
             );
         }
@@ -303,7 +303,11 @@ class Translator extends NamespacedItemResolver implements TranslatorInterface
      */
     protected function parseLocale($locale)
     {
-        return array_filter([$locale ?: $this->locale, $this->fallback]);
+        if (! is_null($locale)) {
+            return array_filter([$locale, $this->fallback]);
+        }
+
+        return array_filter([$this->locale, $this->fallback]);
     }
 
     /**

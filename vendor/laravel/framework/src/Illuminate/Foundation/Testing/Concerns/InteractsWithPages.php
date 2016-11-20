@@ -211,8 +211,6 @@ trait InteractsWithPages
         $callback();
 
         array_pop($this->subCrawlers);
-
-        return $this;
     }
 
     /**
@@ -232,12 +230,12 @@ trait InteractsWithPages
     /**
      * Assert the given constraint.
      *
-     * @param  \Illuminate\Foundation\Testing\Constraints\PageConstraint  $constraint
+     * @param  string  $constraint
      * @param  bool  $reverse
      * @param  string  $message
      * @return $this
      */
-    protected function assertInPage(PageConstraint $constraint, $reverse = false, $message = '')
+    protected function assertInPage(PageConstraint $constraint, $reverse = false, $message = 'Something')
     {
         if ($reverse) {
             $constraint = new ReversePageConstraint($constraint);

@@ -22,25 +22,16 @@ class SparkPostTransport extends Transport
     protected $key;
 
     /**
-     * Transmission options.
-     *
-     * @var array
-     */
-    protected $options = [];
-
-    /**
      * Create a new SparkPost transport instance.
      *
      * @param  \GuzzleHttp\ClientInterface  $client
      * @param  string  $key
-     * @param  array  $options
      * @return void
      */
-    public function __construct(ClientInterface $client, $key, $options = [])
+    public function __construct(ClientInterface $client, $key)
     {
-        $this->key = $key;
         $this->client = $client;
-        $this->options = $options;
+        $this->key = $key;
     }
 
     /**
@@ -65,10 +56,6 @@ class SparkPostTransport extends Transport
                 ],
             ],
         ];
-
-        if ($this->options) {
-            $options['json']['options'] = $this->options;
-        }
 
         return $this->client->post('https://api.sparkpost.com/api/v1/transmissions', $options);
     }

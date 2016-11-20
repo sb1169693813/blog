@@ -271,7 +271,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
         $input = $this->all();
 
         foreach ($keys as $value) {
-            if (! Arr::has($input, $value)) {
+            if (! array_key_exists($value, $input)) {
                 return false;
             }
         }
@@ -338,7 +338,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     }
 
     /**
-     * Get a subset containing the provided keys with values from the input data.
+     * Get a subset of the items from the input data.
      *
      * @param  array|mixed  $keys
      * @return array
@@ -373,17 +373,6 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
         Arr::forget($results, $keys);
 
         return $results;
-    }
-
-    /**
-     * Intersect an array of items with the input data.
-     *
-     * @param  array|mixed  $keys
-     * @return array
-     */
-    public function intersect($keys)
-    {
-        return array_filter($this->only(is_array($keys) ? $keys : func_get_args()));
     }
 
     /**
@@ -459,7 +448,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      *
      * @param  string  $key
      * @param  mixed  $default
-     * @return \Illuminate\Http\UploadedFile|array|null
+     * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array|null
      */
     public function file($key = null, $default = null)
     {
@@ -496,17 +485,6 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     protected function isValidFile($file)
     {
         return $file instanceof SplFileInfo && $file->getPath() != '';
-    }
-
-    /**
-     * Determine if a header is set on the request.
-     *
-     * @param  string  $key
-     * @return bool
-     */
-    public function hasHeader($key)
-    {
-        return ! is_null($this->header($key));
     }
 
     /**
@@ -683,7 +661,11 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
 
         $split = explode('/', $actual);
 
-        return isset($split[1]) && preg_match('#'.preg_quote($split[0], '#').'/.+\+'.preg_quote($split[1], '#').'#', $type);
+        if (isset($split[1]) && preg_match('/'.$split[0].'\/.+\+'.$split[1].'/', $type)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

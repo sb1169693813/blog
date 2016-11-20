@@ -8,13 +8,6 @@ use Illuminate\Database\Grammar as BaseGrammar;
 class Grammar extends BaseGrammar
 {
     /**
-     * The grammar specific operators.
-     *
-     * @var array
-     */
-    protected $operators = [];
-
-    /**
      * The components that make up a select clause.
      *
      * @var array
@@ -147,17 +140,6 @@ class Grammar extends BaseGrammar
         foreach ($joins as $join) {
             $table = $this->wrapTable($join->table);
 
-            $type = $join->type;
-
-            // Cross joins generate a cartesian product between this first table and a joined
-            // table. In case the user didn't specify any "on" clauses on the join we will
-            // append this SQL and jump right back into the next iteration of this loop.
-            if ($type === 'cross' &&  ! $join->clauses) {
-                $sql[] = "cross join $table";
-
-                continue;
-            }
-
             // First we need to build all of the "on" clauses for the join. There may be many
             // of these clauses so we will need to iterate through each one and build them
             // separately, then we'll join them up into a single string when we're done.
@@ -173,6 +155,8 @@ class Grammar extends BaseGrammar
             $clauses[0] = $this->removeLeadingBoolean($clauses[0]);
 
             $clauses = implode(' ', $clauses);
+
+            $type = $join->type;
 
             // Once we have everything ready to go, we will just concatenate all the parts to
             // build the final join statement SQL for the query and we can then return the
@@ -306,20 +290,6 @@ class Grammar extends BaseGrammar
         $value = $this->parameter($where['value']);
 
         return $this->wrap($where['column']).' '.$where['operator'].' '.$value;
-    }
-
-    /**
-     * Compile a where clause comparing two columns..
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereColumn(Builder $query, $where)
-    {
-        $second = $this->wrap($where['second']);
-
-        return $this->wrap($where['first']).' '.$where['operator'].' '.$second;
     }
 
     /**
@@ -461,18 +431,6 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Compile a "where time" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereTime(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('time', $query, $where);
-    }
-
-    /**
      * Compile a "where day" clause.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -610,17 +568,6 @@ class Grammar extends BaseGrammar
 
             return $this->wrap($order['column']).' '.$order['direction'];
         }, $orders));
-    }
-
-    /**
-     * Compile the random statement into SQL.
-     *
-     * @param  string  $seed
-     * @return string
-     */
-    public function compileRandom($seed)
-    {
-        return 'RANDOM()';
     }
 
     /**
@@ -789,18 +736,6 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Prepare the bindings for an update statement.
-     *
-     * @param  array  $bindings
-     * @param  array  $values
-     * @return array
-     */
-    public function prepareBindingsForUpdate(array $bindings, array $values)
-    {
-        return $bindings;
-    }
-
-    /**
      * Compile a delete statement into SQL.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -892,15 +827,5 @@ class Grammar extends BaseGrammar
     protected function removeLeadingBoolean($value)
     {
         return preg_replace('/and |or /i', '', $value, 1);
-    }
-
-    /**
-     * Get the gramar specific operators.
-     *
-     * @return array
-     */
-    public function getOperators()
-    {
-        return $this->operators;
     }
 }

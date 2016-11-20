@@ -11,14 +11,23 @@
 |
 */
 
-Route::get('/test', function () {
+Route::get('/', function () {
 //    return view('welcome');
-    echo 123;
+    echo 'blog';
 });
 
-Route::group(['middleware'=>['web']],function(){
-    //登录路由
-    Route::get('admin/login','Admin\LoginController@login');
-    //验证码路由
-    Route::get('admin/code','Admin\LoginController@code');
-});
+//登录路由(get 和post方法)
+Route::any('admin/login','Admin\LoginController@login');
+//验证码路由
+Route::get('admin/code','Admin\LoginController@code');
+
+Route::get('admin/getCode','Admin\LoginController@getCode');
+
+//设置session
+Route::get('/setSession','TestController@setSession');
+//获得session
+Route::get('/getSession','TestController@getSession');
+//获取crypt加密
+Route::get('admin/crypt','Admin\LoginController@crypt');
+
+

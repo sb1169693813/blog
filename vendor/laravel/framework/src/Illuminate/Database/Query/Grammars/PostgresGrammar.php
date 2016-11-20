@@ -16,7 +16,6 @@ class PostgresGrammar extends Grammar
         '=', '<', '>', '<=', '>=', '<>', '!=',
         'like', 'not like', 'between', 'ilike',
         '&', '|', '#', '<<', '>>',
-        '@>', '<@', '?', '?|', '?&', '||', '-', '-', '#-',
     ];
 
     /**
@@ -47,6 +46,42 @@ class PostgresGrammar extends Grammar
         $value = $this->parameter($where['value']);
 
         return $this->wrap($where['column']).'::date '.$where['operator'].' '.$value;
+    }
+
+    /**
+     * Compile a "where day" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $where
+     * @return string
+     */
+    protected function whereDay(Builder $query, $where)
+    {
+        return $this->dateBasedWhere('day', $query, $where);
+    }
+
+    /**
+     * Compile a "where month" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $where
+     * @return string
+     */
+    protected function whereMonth(Builder $query, $where)
+    {
+        return $this->dateBasedWhere('month', $query, $where);
+    }
+
+    /**
+     * Compile a "where year" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $where
+     * @return string
+     */
+    protected function whereYear(Builder $query, $where)
+    {
+        return $this->dateBasedWhere('year', $query, $where);
     }
 
     /**
@@ -238,7 +273,7 @@ class PostgresGrammar extends Grammar
     {
         $path = explode('->', $value);
 
-        $field = $this->wrapValue(array_shift($path));
+        $field = array_shift($path);
 
         $wrappedPath = $this->wrapJsonPathAttributes($path);
 
