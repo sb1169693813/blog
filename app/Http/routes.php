@@ -16,12 +16,24 @@ Route::get('/', function () {
     echo 'blog';
 });
 
-//登录路由(get 和post方法)
-Route::any('admin/login','Admin\LoginController@login');
+
 //验证码路由
 Route::get('admin/code','Admin\LoginController@code');
-
+Route::get('admin/server','Admin\IndexController@server');
 Route::get('admin/getCode','Admin\LoginController@getCode');
+
+
+//登录首页(get 和post方法)
+Route::any('admin/login','Admin\LoginController@login');
+//登录中间件
+Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admin'],function(){
+    //后台首页
+    Route::get('index','IndexController@index');
+//后台首页主体info部分
+    Route::get('info','IndexController@info');
+    //登出
+    Route::any('logout','LoginController@logout');
+});
 
 //设置session
 Route::get('/setSession','TestController@setSession');

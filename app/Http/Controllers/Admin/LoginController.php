@@ -36,12 +36,19 @@ class LoginController extends CommonController
 
             //讲用户名存储在session中
             session(['user_info'=>$user]);
-            echo '登录成功';
+            return redirect('admin/index');
         }else {
             return view('admin.login');
         }
     }
 
+    //退出
+    public function logout()
+    {
+        //清空session
+        session(['user_info'=>null]);
+        return redirect('admin/login');
+    }
     public function code()
     {
         $code = new \Code;
