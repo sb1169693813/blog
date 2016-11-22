@@ -33,6 +33,7 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
     Route::get('info','IndexController@info');
     //登出
     Route::any('logout','LoginController@logout');
+    Route::any('pass','IndexController@pass');
 });
 
 //设置session

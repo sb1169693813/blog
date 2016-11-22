@@ -7,14 +7,17 @@
 </head>
 <body style="background:#F3F3F4;">
 	<div class="login_box">
-		<h1>Blog</h1>
-		<h2>欢迎使用博客管理平台</h2>
+		{{--<h1>Blog</h1>--}}
+		{{--<h2>欢迎使用博客管理平台</h2>--}}
 		<div class="form">
 			@if(session('msg'))
 			<p style="color:red">{{session('msg')}}</p>
 			@endif
 			<form action="" method="post">
 				{{csrf_field()}}
+				{{--默认情况下，Blade 的  {{ }} 语句已经通过 PHP 的  htmlentities 函数处理以避免 XSS--}}
+				{{--攻击，如果你不想要数据被处理，可以使用如下语法：--}}
+				{{--{!! csrf_field() !!}--}}
 				<ul>
 					<li>
 					<input type="text" name="user_name" class="text"/>
