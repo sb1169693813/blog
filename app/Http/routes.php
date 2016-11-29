@@ -34,6 +34,9 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
     //登出
     Route::any('logout','LoginController@logout');
     Route::any('pass','IndexController@pass');
+
+    //文章分类
+    Route::resource('category','CategoryController');
 });
 
 //设置session
