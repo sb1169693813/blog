@@ -6,6 +6,7 @@ use App\Http\Model\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
@@ -46,8 +47,10 @@ class IndexController extends CommonController
                 $user = User::find(1);
 //                dd( $validator);
 //                exit;
-                if(Crypt::decrypt($user->user_password) == $input['password_o']){
-                    $user->user_password = Crypt::encrypt($input['password']);
+//                if(Crypt::decrypt($user->user_password) == $input['password_o']){
+//                    $user->user_password = Crypt::encrypt($input['password']);
+                if(Hash::check($input['password_o'],$user->user_password)){
+                    $user->user_password = Hash::make($input['password']);
                     $user->update();
                     return redirect('admin/index');
                 }else{

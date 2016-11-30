@@ -46,4 +46,8 @@ Route::get('/getSession','TestController@getSession');
 //获取crypt加密
 Route::get('admin/crypt','Admin\LoginController@crypt');
 
+Route::get('token',function(){
+    dd(session('_token'));
+});
+
 

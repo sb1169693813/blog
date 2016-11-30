@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 
 require_once 'resources/org/code/Code.class.php';
@@ -29,7 +30,8 @@ class LoginController extends CommonController
             }
 
             //验证用户密码
-            if(Crypt::decrypt($user->user_password) != $input['user_password'])
+//            if(Crypt::decrypt($user->user_password) != $input['user_password'])
+            if(!Hash::check($input['user_password'], $user->user_password))
             {
                 return back()->with('msg','密码错误');
             }
@@ -49,6 +51,7 @@ class LoginController extends CommonController
         session(['user_info'=>null]);
         return redirect('admin/login');
     }
+    //生成验证码
     public function code()
     {
         $code = new \Code;
@@ -64,7 +67,7 @@ class LoginController extends CommonController
     public function crypt()
     {
         $str = '123456';
-        $enstr = Crypt::encrypt($str);
+        $enstr = Hash::make($str);
         echo $enstr;
     }
 

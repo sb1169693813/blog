@@ -14,7 +14,7 @@
 			<p style="color:red">{{session('msg')}}</p>
 			@endif
 			<form action="" method="post">
-				{{csrf_field()}}
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				{{--默认情况下，Blade 的  {{ }} 语句已经通过 PHP 的  htmlentities 函数处理以避免 XSS--}}
 				{{--攻击，如果你不想要数据被处理，可以使用如下语法：--}}
 				{{--{!! csrf_field() !!}--}}
@@ -37,7 +37,7 @@
 					</li>
 				</ul>
 			</form>
-			<p><a href="#">返回首页</a> &copy; 2016 Powered by <a href="http://www.houdunwang.com" target="_blank">http://www.houdunwang.com</a></p>
+			<p><a href="#">返回首页</a> &copy; 2016 Powered by <a href="#" target="_blank">####</a></p>
 		</div>
 	</div>
 </body>

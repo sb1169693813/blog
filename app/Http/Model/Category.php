@@ -20,14 +20,13 @@ class Category extends Model
     }
 
     //获取二级分类列表
-    public function getTree($data,$cate_id,$cate_pid,$pid)
+    public function getTree($data,$cate_id='cate_id',$cate_pid='cate_pid',$pid=0)
     {
         //定义一个新的数组存在重组的数据
-        $parr = array();
         $arr = array();
         foreach ($data as $k=>$v)
         {
-            //父级的取出来
+            //父级=0
             if($v->$cate_pid == $pid)
             {
                 $arr[] = $data[$k];

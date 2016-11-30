@@ -25,7 +25,7 @@
                 <h3><i class="fa fa-fw fa-clipboard"></i>常用操作</h3>
                 <ul class="sub_menu">
                     <li><a href="add.html" target="main"><i class="fa fa-fw fa-plus-square"></i>添加页</a></li>
-                    <li><a href="category/list.html" target="main"><i class="fa fa-fw fa-list-ul"></i>列表页</a></li>
+                    <li><a href="{{url('admin/category')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>列表页</a></li>
                     <li><a href="tab.html" target="main"><i class="fa fa-fw fa-list-alt"></i>tab页</a></li>
                     <li><a href="img.html" target="main"><i class="fa fa-fw fa-image"></i>图片列表</a></li>
                 </ul>
@@ -51,12 +51,12 @@
     <!--左侧导航 结束-->
     <!--主体部分 开始-->
     <div class="main_box">
-        <iframe src="{{url('admin/info')}}" frameborder="0" width="100%" height="100%" name="main"></iframe>
+        <iframe src="{{url('admin/info')}}" frameborder="0" width="100%" height="100%" name="main" id="main"></iframe>
     </div>
     <!--主体部分 结束-->
     <!--底部 开始-->
     <div class="bottom_box">
-        CopyRight © 2015. Powered By <a href="http://www.houdunwang.com">http://www.houdunwang.com</a>.
+        CopyRight © 2015. Powered By <a href="http://www.baidu.com">http://www.baidu.com</a>.
     </div>
     <!--底部 结束-->
 @endsection
