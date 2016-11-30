@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    <meta name="_token" content="{{ csrf_token() }}"/>
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
@@ -58,7 +59,7 @@
                     @foreach($categorys as $value)
                     <tr>
                         <td class="tc">
-                            <input type="text" name="ord[]" value="{{$value->cate_order}}">
+                            <input type="text" name="ord[]" onchange="changeOrder(this,'{{$value->cate_id}}');" value="{{$value->cate_order}}">
                         </td>
                         <td class="tc">{{$value->cate_id}}</td>
                         <td>
@@ -112,5 +113,30 @@
         </div>
     </form>
     <!--搜索结果页面 列表 结束-->
+    <script>
+        function changeOrder(obj,cate_id){
+            //alert(111);
+            var objValue = $(obj).val();
+            //alert(objValue);
+            $.ajax({
+                type: "post",
+                url: "{{url('admin/category/cateOrder')}}",
+                data: {'cate_order': objValue, 'cate_id': cate_id},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                dataType: "json",
+                success: function (jsondata) {
+                    if(jsondata.code > 0){
+                        //更新成功
+                        layer.alert(jsondata.msg, {icon: 6});
+                       //location.href='{{url("admin/category")}}';
+                    }else{
+                        layer.alert(jsondata.msg, {icon: 5});
+                    }
+                }
+            });
+        }
+    </script>
     @endsection
 

@@ -37,6 +37,8 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
 
     //文章分类
     Route::resource('category','CategoryController');
+    //order排序
+    Route::post('category/cateOrder','CategoryController@cateOrder');
 });
 
 //设置session

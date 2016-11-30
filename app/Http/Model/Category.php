@@ -10,11 +10,13 @@ class Category extends Model
     protected $primaryKey = 'cate_id';
     //时间
     public $timestamps = false;
+    //不填充
+    protected $guarded = [];
     
     //index列表
     public function index()
     {
-        $categorys = $this->all();
+        $categorys = $this->orderBy('cate_order')->get();
         //return $categorys;
         return $this->getTree($categorys,'cate_id','cate_pid',0);
     }
