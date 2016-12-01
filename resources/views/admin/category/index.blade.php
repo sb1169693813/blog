@@ -8,37 +8,14 @@
     </div>
     <!--面包屑导航 结束-->
 
-    <!--结果页快捷搜索框 开始-->
-    <div class="search_wrap">
-        <form action="" method="post">
-            <table class="search_tab">
-                <tr>
-                    <th width="120">选择分类:</th>
-                    <td>
-                        <select onchange="javascript:location.href=this.value;">
-                            <option value="">全部</option>
-                            <option value="http://www.baidu.com">百度</option>
-                            <option value="http://www.sina.com">新浪</option>
-                        </select>
-                    </td>
-                    <th width="70">关键字:</th>
-                    <td><input type="text" name="keywords" placeholder="关键字"></td>
-                    <td><input type="submit" name="sub" value="查询"></td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <!--结果页快捷搜索框 结束-->
-
     <!--搜索结果页面 列表 开始-->
     <form action="#" method="post">
         <div class="result_wrap">
             <!--快捷导航 开始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="#"><i class="fa fa-plus"></i>新增文章</a>
-                    <a href="#"><i class="fa fa-recycle"></i>批量删除</a>
-                    <a href="#"><i class="fa fa-refresh"></i>更新排序</a>
+                    <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>新增分类</a>
+                    <a href="{{url('admin/category')}}"><i class="fa fa-recycle"></i>全部分类</a>
                 </div>
             </div>
             <!--快捷导航 结束-->
@@ -72,16 +49,13 @@
                         <td>{{$value->cate_title}}</td>
                         <td>{{$value->cate_view}}</td>
                         <td>
-                            <a href="#">修改</a>
-                            <a href="#">删除</a>
+                            <a href="{{url('admin/category/'.$value->cate_id.'/edit')}}">修改</a>
+                            <a href="javsscript:void(0);" onclick="del({{$value->cate_id}});">删除</a>
                         </td>
                     </tr>
                     @endforeach
-
                 </table>
-
-
-                <div class="page_nav">
+                {{--<div class="page_nav">
                     <div>
                         <a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一页</a>
                         <a class="prev" href="/wysls/index.php/Admin/Tag/index/p/7.html">上一页</a>
@@ -94,11 +68,8 @@
                         <a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最后一页</a>
                         <span class="rows">11 条记录</span>
                     </div>
-                </div>
-
-
-
-                <div class="page_list">
+                </div>--}}
+                {{--<div class="page_list">
                     <ul>
                         <li class="disabled"><a href="#">&laquo;</a></li>
                         <li class="active"><a href="#">1</a></li>
@@ -108,7 +79,8 @@
                         <li><a href="#">5</a></li>
                         <li><a href="#">&raquo;</a></li>
                     </ul>
-                </div>
+                </div>--}}
+
             </div>
         </div>
     </form>
@@ -135,6 +107,35 @@
                         layer.alert(jsondata.msg, {icon: 5});
                     }
                 }
+            });
+        };
+
+        function del(cate_id) {
+            layer.confirm('您确定要删除这个分类吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+               $.ajax({
+                 type:"DELETE",
+                 url:"{{url('admin/category')}}/"+cate_id,
+                 data: {},
+                 headers: {
+                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                 },
+                 dataType: "json",
+                 success: function (jsondata) {
+                         if(jsondata.code > 0){
+                            //更新成功
+                             location.href=location.href;
+                            layer.alert(jsondata.msg, {icon: 6});
+                        }else{
+                            layer.alert(jsondata.msg, {icon: 5});
+                        }
+                     //alert(jsondata);
+                     }
+                 });
+//            layer.msg('的确很重要', {icon: 1});
+            }, function(){
+                //alert(456);
             });
         }
     </script>

@@ -44,7 +44,7 @@ class CategoryController extends CommonController
         return view('admin.category.create',compact('pid'));
     }
 
-    // admin/category   添加分类执行
+    //POST admin/category   添加分类执行
     public function store()
     {
         $input = Input::all();
@@ -80,27 +80,66 @@ class CategoryController extends CommonController
 
         //dd($input);
     }
-    
-    //admin/category/{category}更新分类
-    public function update()
+    //GET admin/category/{category}/edit更新分类页面
+    public function edit($cate_id)
     {
-
+        //根据id获得一条记录
+        $category = Category::find($cate_id);
+        //获得所有的cate_pid=0的cate_id
+        $pid = Category::where('cate_pid',0)->get();
+        return view('admin.category.edit',compact('category','pid'));
     }
 
-    //admin/category/{category}删除单个分类
-    public function destroy()
+    //PUT admin/category/{category}更新分类执行
+    public function update($cate_id)
     {
+        //排除不需要的数据
+        $input = Input::except('_token','_method');
+        //验证提交过来的数据
+        //规则
+        $rules = [
+            'cate_name'=>'required',
+        ];
+        //对应中文
+        $message = [
+            'cate_name.required'=>'分类名不能为空',
+        ];
+        $validator = Validator::make($input,$rules,$message);
+        if($validator->passes()){
+            //验证通过之后，更新数据
+           $rows =  Category::where('cate_id',$cate_id)->update($input);
+            if($rows > 0){
+                //更新成功
+                return redirect('admin/category');//分类首页
+            }else{
+                //更新失败
+                $errors['error'] = '分类信息更新失败，请稍后重试！';
+                return back()->withErrors($errors);
+            }
+        }else{
+            //验证失败
+            return back()->withErrors($validator);
+        }
+       // dd($input);
+    }
 
+    //DELETE admin/category/{category}删除单个分类
+    public function destroy($cate_id)
+    {
+        $rows = Category::where('cate_id',$cate_id)->delete();
+        if($rows > 0){
+            $jsondata['code'] = 1;
+            $jsondata['msg'] = '删除成功！';
+        }else{
+            $jsondata['code'] = -1;
+            $jsondata['msg'] = '删除失败！请稍后重试！';
+        }
+
+        return $jsondata;
     }
 
     //admin/category/{category}显示单个分类信息
     public function show()
-    {
-
-    }
-
-    //admin/category/{category}/edit编辑分类
-    public function edit()
     {
 
     }
