@@ -39,6 +39,10 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
     Route::resource('category','CategoryController');
     //order排序
     Route::post('category/cateOrder','CategoryController@cateOrder');
+    //文章
+    Route::resource('article','ArticleController');
+
+    Route::any('upload','CommonController@upload');
 });
 
 //设置session
