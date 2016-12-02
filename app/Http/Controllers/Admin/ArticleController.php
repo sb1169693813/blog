@@ -16,7 +16,7 @@ class ArticleController extends CommonController
     //GET admin/article
     public function index()
     {
-        $data = Article::orderBy('art_id','desc')->paginate(1);
+        $data = Article::orderBy('art_id','desc')->paginate(3);
        // dd($data);
         return view('admin.article.index',compact('data'));
     }
