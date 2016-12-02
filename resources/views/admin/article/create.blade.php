@@ -28,14 +28,14 @@
     </div>
     <!--结果集标题与导航组件 结束-->
     <div class="result_wrap">
-        <form action="#" method="post">
+        <form action="{{url('admin/article')}}" method="post">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
                 <tr>
                     <th width="120"><i class="require">*</i>文章分类：</th>
                     <td>
-                        <select name="cate_pid">
+                        <select name="cate_id">
                             @foreach($categorys as $p)
                             <option value="{{$p->cate_id}}">
                                 @if($p->cate_pid != 0)
@@ -125,6 +125,7 @@
         //实例化编辑器
         //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
         var ue = UE.getEditor('editor');
+        //uploadify
         <?php $timestamp = time();?>
 		$(function() {
             $('#file_upload').uploadify({
