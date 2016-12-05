@@ -253,7 +253,7 @@ class ComposerStaticInit77f39ccdfe0293fa273c36621fc93ac8
     );
 
     public static $classMap = array (
-        'CreateLinksTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_04_141809_create_links_table.php',
+        'CreateLinksTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_05_032552_create_links_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
@@ -329,6 +329,7 @@ class ComposerStaticInit77f39ccdfe0293fa273c36621fc93ac8
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+        'LinksTableSeeder' => __DIR__ . '/../..' . '/database/seeds/LinksTableSeeder.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

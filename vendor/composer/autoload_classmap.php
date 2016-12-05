@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateLinksTable' => $baseDir . '/database/migrations/2016_12_04_141809_create_links_table.php',
+    'CreateLinksTable' => $baseDir . '/database/migrations/2016_12_05_032552_create_links_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
@@ -82,6 +82,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'LinksTableSeeder' => $baseDir . '/database/seeds/LinksTableSeeder.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
