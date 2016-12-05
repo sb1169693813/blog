@@ -37,12 +37,15 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
 
     //文章分类
     Route::resource('category','CategoryController');
-    //order排序
+    //分类order排序
     Route::post('category/cateOrder','CategoryController@cateOrder');
     //文章
     Route::resource('article','ArticleController');
-
+    //友情链接
+    Route::resource('link','LinkController');
     Route::any('upload','CommonController@upload');
+    //友情order排序
+    Route::post('link/changeOrder','LinkController@changeOrder');
 });
 
 //设置session
