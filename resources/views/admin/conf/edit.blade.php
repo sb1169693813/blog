@@ -3,7 +3,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo;  添加网站配置首页
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo;  修改网站配置
     </div>
     <!--面包屑导航 结束-->
 
@@ -28,20 +28,21 @@
     </div>
     <!--结果集标题与导航组件 结束-->
     <div class="result_wrap">
-        <form action="{{url('admin/conf')}}" method="post">
+        <form action="{{url('admin/conf/'.$data->conf_id.'')}}" method="post">
+            <input type="hidden" name="_method" value="put">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
                 <tr>
                     <th><i class="require">*</i>网站配置标题：</th>
                     <td>
-                        <input type="text" class="lg" name="conf_title">
+                        <input type="text" class="lg" name="conf_title" value="{{$data->conf_title}}">
                     </td>
                 </tr>
                 <tr>
                     <th>网站配置变量名：</th>
                     <td>
-                        <input type="text" class="lg" name="conf_name">
+                        <input type="text" class="lg" name="conf_name" value="{{$data->conf_name}}">
                     </td>
                 </tr>
                 <tr>
@@ -55,19 +56,19 @@
                 <tr id="field_value">
                     <th>网站配置类型值：</th>
                     <td>
-                        <input type="text"  name="field_value"><i class="require">*</i>1|开启,0|关闭
+                        <input type="text" size = '5' name="field_value" value="{{$data->field_value}}"><i class="require">*</i>1|开启 0|关闭
                     </td>
                 </tr>
                 <tr>
                     <th>网站配置备注：</th>
                     <td>
-                        <textarea name="conf_tips" id="" cols="30" rows="10"></textarea>
+                        <textarea name="conf_tips" id="" cols="30" rows="10">{{$data->conf_tips}}</textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>网站配置排序：</th>
                     <td>
-                        <input type="text" size = '5' name="conf_order">
+                        <input type="text" size = '5' name="conf_order" value="{{$data->conf_order}}">
                     </td>
                 </tr>
                 <tr>

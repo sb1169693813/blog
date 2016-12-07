@@ -19,7 +19,37 @@ class ConfController extends CommonController
     {
         $conf = new Conf();
         $data = $conf->orderBy('conf_order','asc')->paginate(10);
-        // dd($data);
+        foreach($data as $k=>$v){
+            //dd($v->conf_content);
+            switch($v->field_type){
+                case 'input':
+                    $data[$k]['_html'] = '<input type="text" class="lg" name="conf_content[]" value="'.$v->conf_content.'">';
+                    //echo $v->_html;
+                    break;
+                case 'textarea':
+                    $data[$k]['_html'] = '<textarea name="conf_content[]">'.$v->conf_content.'</textarea>';
+                    //echo $v->_html;
+                    break;
+                case 'radio':
+                    //checked
+                    if($v->field_value == 0){
+                        $checked0 = ' checked ';
+                    }else{
+                        $checked0 = '';
+                    }
+                    if($v->field_value == 1){
+                        $checked1 = ' checked ';
+                    }else{
+                        $checked1 = '';
+                    }
+                    $str = '<input type="radio" name="conf_content[]" '.$checked0.' value="'.$v->conf_content.'">'.'关闭';
+                    $str .= '<input type="radio" name="conf_content[]" '.$checked1.' value="'.$v->conf_content.'">'.'开启';
+                    $data[$k]['_html'] = $str;
+                    //echo $v->_html;
+                    break;
+            }
+        }
+       // dd($data->all());
         return view('admin.conf.index',compact('data'));
     }
     //GET admin/conf/create添加网站配置页面
@@ -37,10 +67,12 @@ class ConfController extends CommonController
         $rules = [
             'conf_title'=>'required',
             'conf_order'=>'numeric',
+            'field_value'=>'numeric',
         ];
         $message = [
             'conf_title.required'=>'网站配置标题不能为空！',
-            'conf_order.numeric'=>'网站配置排序必须是数字！'
+            'conf_order.numeric'=>'网站配置排序必须是数字！',
+            'field_value.numeric'=>'类型值必须是数字！',
         ];
         $validator = Validator::make($input,$rules,$message);
         if($validator->passes()){
@@ -72,13 +104,15 @@ class ConfController extends CommonController
         //验证提交过来的数据
         //规则
         $rules = [
-            'conf_name'=>'required',
+            'conf_title'=>'required',
             'conf_order'=>'numeric',
+            'field_value'=>'numeric',
         ];
         //对应中文
         $message = [
-            'conf_name.required'=>'名称不能为空！',
-            'conf_order.numeric'=>'排序必须是数字！'
+            'conf_title.required'=>'网站配置标题不能为空！',
+            'conf_order.numeric'=>'网站配置排序必须是数字！',
+            'field_value.numeric'=>'类型值必须是数字！',
         ];
         $validator = Validator::make($input,$rules,$message);
         if($validator->passes()){
@@ -86,9 +120,11 @@ class ConfController extends CommonController
             $conf = new Conf();
             $lin =  $conf->find($id);
             $updateData['conf_name'] = $input['conf_name'];
-            $updateData['conf_alias'] = $input['conf_alias'];
-            $updateData['conf_url'] = $input['conf_url'];
+            $updateData['conf_title'] = $input['conf_title'];
+            $updateData['field_type'] = $input['field_type'];
+            $updateData['field_value'] = $input['field_value'];
             $updateData['conf_order'] = $input['conf_order'];
+            $updateData['conf_tips'] = $input['conf_tips'];
             $rows = $lin->update($updateData);
             if($rows > 0){
                 //更新成功
@@ -102,6 +138,16 @@ class ConfController extends CommonController
             //验证失败
             return back()->withErrors($validator);
         }
+    }
+
+    public function changeContent()
+    {
+        $input = Input::all();
+        foreach ($input['conf_id'] as $m=>$n){
+            Conf::where('conf_id',$n)->update(['conf_content'=>$input['conf_content'][$m]]);
+        }
+        $errors['error'] = '内容更新成功！';
+        return back()->withErrors($errors);
     }
     //DELETE admin/conf/{conf}删除单个网站配置
     public function destroy($id)
@@ -138,5 +184,12 @@ class ConfController extends CommonController
     public function show()
     {
 
+    }
+    
+    //写入配置文件
+    public function putFile()
+    {
+        $configs = Conf::all();
+        dd(111);
     }
 }

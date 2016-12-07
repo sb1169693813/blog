@@ -9,8 +9,17 @@
     <!--面包屑导航 结束-->
 
     <!--搜索结果页面 列表 开始-->
-    <form action="#" method="post">
         <div class="result_wrap">
+            <div class="result_title">
+                <h3>快捷操作</h3>
+                @if(count($errors) > 0)
+                    <div class="mark">
+                        @foreach($errors->all() as $e)
+                            {{$e}}
+                        @endforeach
+                    </div>
+                @endif
+            </div>
             <!--快捷导航 开始-->
             <div class="result_content">
                 <div class="short_wrap">
@@ -22,12 +31,15 @@
         </div>
         <div class="result_wrap">
             <div class="result_content">
+                <form action="{{url('admin/conf/changeContent')}}" method="post">
+                    {{csrf_field()}}
                 <table class="list_tab">
                     <tr>
                         <th class="tc">排序</th>
                         <th class="tc">ID</th>
                         <th>标题</th>
                         <th>变量名</th>
+                        <th>内容</th>
                         <th>备注</th>
                         <th>操作</th>
                     </tr>
@@ -37,6 +49,10 @@
                             <td class="tc">{{$v->conf_id}}</td>
                             <td>{{$v->conf_title}}</td>
                             <td>{{$v->conf_name}}</td>
+                            <td>
+                                <input type="hidden" name="conf_id[]" value="{{$v->conf_id}}">
+                                {!! $v->_html !!}
+                            </td>
                             <td>{{$v->conf_tips}}</td>
                             <td>
                                 <a href="{{url('admin/conf/'.$v->conf_id.'/edit')}}">修改</a>
@@ -45,6 +61,11 @@
                         </tr>
                     @endforeach
                 </table>
+                    <div class="btn_group">
+                        <input type="submit" value="提交">
+                        <input type="button" class="back" onclick="history.go(-1)" value="返回" >
+                    </div>
+                </form>
                 <div class="page_list">
                     {{$data->links()}}
                 </div>
@@ -56,16 +77,15 @@
                 </style>
             </div>
         </div>
-    </form>
     <!--搜索结果页面 列表 结束-->
     <script>
-        function delArt(art_id) {
+        function delArt(conf_id) {
             layer.confirm('您确定要删除这个分类吗？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
                $.ajax({
                  type:"DELETE",
-                 url:"{{url('admin/conf')}}/"+art_id,
+                 url:"{{url('admin/conf')}}/"+conf_id,
                  data: {},
                  headers: {
                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
