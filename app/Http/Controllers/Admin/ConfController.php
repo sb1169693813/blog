@@ -139,4 +139,14 @@ class ConfController extends CommonController
     {
 
     }
+
+    //写入文件
+    public function putFile()
+    {
+
+        $conf = Conf::pluck('conf_content','conf_name')->all();
+        $path = base_path().'\config\webconfig.php';
+        $str = '<?php return '.var_export($conf,true).';';
+        file_put_contents($path, $str);
+    }
 }

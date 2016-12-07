@@ -55,6 +55,8 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
     Route::post('nav/changeOrder','NavController@changeOrder');
     //网站配置order排序
     Route::post('conf/changeOrder','ConfController@changeOrder');
+    //测试文件写入
+    Route::get('config/putfile','ConfController@putFile');
 });
 
 //设置session
