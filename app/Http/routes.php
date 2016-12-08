@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-//    return view('welcome');
-    echo 'blog';
-});
+//Route::get('/', function () {
+////    return view('welcome');
+//    echo 'blog';
+//});
 
 
 //验证码路由
@@ -60,6 +60,16 @@ Route::group(['middleware'=>['admin.login'],'prefix'=>'admin','namespace'=>'Admi
     Route::post('conf/changeContent','ConfController@changeContent');
     //测试文件写入
     Route::get('config/putfile','ConfController@putFile');
+});
+
+//前台路由
+Route::group(['namespace'=>'Home'],function(){
+    //前台首页
+    Route::get('/','IndexController@index');
+    //前台文章列表页
+    Route::get('lists','IndexController@lists');
+    //前台文章详情页面
+    Route::get('news','IndexController@news');
 });
 
 //设置session
