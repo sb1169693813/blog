@@ -12,13 +12,8 @@
             </h3>
             <ul>
                 @foreach($hot as $h)
-                    <li><a href="{{url('a/'.$h->art_id)}}"  target="_blank"><img src="{{url($h->art_thumb)}}"></a><span>{{$h->art_title}}</span></li>
+                    <li><a href="{{url('news/'.$h->art_id)}}"  target="_blank"><img src="{{url($h->art_thumb)}}"></a><span>{{$h->art_title}}</span></li>
                 @endforeach
-                {{--<li><a href="/" target="_blank"><img src="images/02.jpg"></a><span>黑色质感时间轴html5个人博客模板</span></li>--}}
-                {{--<li><a href="/"  target="_blank"><img src="images/03.jpg"></a><span>Green绿色小清新的夏天-个人博客模板</span></li>--}}
-                {{--<li><a href="/" target="_blank"><img src="images/04.jpg"></a><span>女生清新个人博客网站模板</span></li>--}}
-                {{--<li><a href="/"  target="_blank"><img src="images/02.jpg"></a><span>黑色质感时间轴html5个人博客模板</span></li>--}}
-                {{--<li><a href="/"  target="_blank"><img src="images/03.jpg"></a><span>Green绿色小清新的夏天-个人博客模板</span></li>--}}
             </ul>
         </div>
     </div>
@@ -32,7 +27,7 @@
             <figure><img src="{{url($al->art_thumb)}}"></figure>
             <ul>
                 <p>{{$al->art_description}}</p>
-                <a title="{{$al->art_title}}" href="{{url('a/'.$al->art_id)}}" target="_blank" class="readmore">阅读全文>></a>
+                <a title="{{$al->art_title}}" href="{{url('news/'.$al->art_id)}}" target="_blank" class="readmore">阅读全文>></a>
             </ul>
             <p class="dateview"><span>{{date('Y-m-d',strtotime($al->art_time))}}</span><span>作者：{{$al->editor}}</span></p>
                 {{--<span>个人博客：[<a href="/news/life/">程序人生</a>]</span>--}}
@@ -41,22 +36,7 @@
         <aside class="right">
             <div class="weather"><iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=1"></iframe></div>
             <div class="news">
-                <h3>
-                    <p>最新<span>文章</span></p>
-                </h3>
-                <ul class="rank">
-                    @foreach($new as $n)
-                    <li><a href="{{url('a/'.$n->art_id)}}" title="{{$n->art_title}}" target="_blank">{{$n->art_title}}</a></li>
-                    @endforeach
-                </ul>
-                <h3 class="ph">
-                    <p>点击<span>排行</span></p>
-                </h3>
-                <ul class="paih">
-                    @foreach($rank as $r)
-                    <li><a href="{{url('a/'.$r->art_id)}}" title="{{$r->art_title}}" target="_blank">{{$r->art_title}}</a></li>
-                    @endforeach
-                </ul>
+                @parent
                 <h3 class="links">
                     <p>友情<span>链接</span></p>
                 </h3>

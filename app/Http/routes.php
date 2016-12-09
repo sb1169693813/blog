@@ -67,9 +67,9 @@ Route::group(['namespace'=>'Home'],function(){
     //前台首页
     Route::get('/','IndexController@index');
     //前台文章列表页
-    Route::get('lists','IndexController@lists');
+    Route::get('lists/{cate_id}','IndexController@lists');
     //前台文章详情页面
-    Route::get('news','IndexController@news');
+    Route::get('news/{art_id}','IndexController@news');
 });
 
 //设置session

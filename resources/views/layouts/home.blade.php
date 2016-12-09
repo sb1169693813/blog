@@ -16,7 +16,7 @@
     <div id="logo"><a href="/"></a></div>
     <nav class="topnav" id="topnav">
         @foreach($navs as $n)
-        <a href=""><span>{{$n->nav_name}}</span><span class="en">{{$n->nav_alias}}</span></a>
+        <a href="{{$n->nav_url}}"><span>{{$n->nav_name}}</span><span class="en">{{$n->nav_alias}}</span></a>
         @endforeach
     </nav>
 </header>
@@ -31,7 +31,24 @@
     </section>
 </div>
 
-@yield('homecontent')
+@section('homecontent')
+    <h3>
+        <p>最新<span>文章</span></p>
+    </h3>
+    <ul class="rank">
+        @foreach($hot as $n)
+            <li><a href="{{url('news/'.$n->art_id)}}" title="{{$n->art_title}}" target="_blank">{{$n->art_title}}</a></li>
+        @endforeach
+    </ul>
+    <h3 class="ph">
+        <p>点击<span>排行</span></p>
+    </h3>
+    <ul class="paih">
+        @foreach($rank as $h)
+            <li><a href="{{url('news/'.$h->art_id)}}" title="{{$h->art_title}}" target="_blank">{{$h->art_title}}</a></li>
+        @endforeach
+    </ul>
+    @show
 <footer>
     <p>Design by 后盾网 <a href="http://www.miitbeian.gov.cn/" target="_blank">http://www.houdunwang.com</a> <a href="/">网站统计</a></p>
 </footer>
